@@ -103,7 +103,7 @@ Features can provide a default rendering that can be overridden by themes
 to do so the `Sitegeist.Turncoat:Feature` namespace is used.
 
 ```neosfusion
-prototype(Vendor.Theme:Feature.Example) < prototype(Neos.Fusion:Component) {
+prototype(Sitegeist.Turncoat:Feature.Example) < prototype(Neos.Fusion:Component) {
     title = null    
     renderer = afx`
         <h1 style="font-family:Times,serif; color:green;">
