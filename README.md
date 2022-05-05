@@ -11,7 +11,13 @@ Theming for Neos CMS ... by separating the implementation of features from the r
 *The development and the public-releases of this package is generously sponsored
 by our employer http://www.sitegeist.de.*
 
-## Usage 
+## Installation
+
+Sitegeist.Turncoat is available via packagist and can be installed with the command `composer require sitegeist/turncoat`.
+
+We use semantic-versioning so every breaking change will increase the major-version number.
+
+## Usage
 
 ### Selecting a Theme
 
