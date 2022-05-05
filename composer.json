@@ -1,0 +1,19 @@
+{
+    "description": "Theming for Neos CMS",
+    "type": "neos-package",
+    "name": "sitegeist/turncoat",
+    "license": "GPL-3.0-or-later",
+    "require": {
+        "neos/flow": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Sitegeist\\Turncoat\\": "Classes/"
+        }
+    },
+    "extra": {
+        "neos": {
+            "package-key": "Sitegeist.Turncoat"
+        }
+    }
+}

@@ -1,0 +1,51 @@
+prototype(Sitegeist.Turncoat:ThemeRenderer) < prototype(Neos.Fusion:Value) {
+    theme = ${q(site).property('theme')}
+    feature = null
+    props = Neos.Fusion:DataStructure
+
+    @context {
+        theme = ${this.theme}
+        feature = ${this.feature}
+        props = ${this.props}
+    }
+
+    value = Neos.Fusion:Case {
+        canRenderWithTheme {
+            condition = Neos.Fusion:CanRender {
+                type = ${theme + ':Feature.' + feature}
+            }
+            renderer = Neos.Fusion:Renderer {
+                type = ${theme + ':Feature.' + feature}
+                element.@apply.props = ${props}
+            }
+        }
+
+        canRenderWithDefault {
+            condition = Neos.Fusion:CanRender {
+                type = ${'Sitegeist.Turncoat:Feature.' + feature}
+            }
+            renderer = Neos.Fusion:Renderer {
+                type = ${'Sitegeist.Turncoat:Feature.' + feature}
+                element.@apply.props = ${props}
+            }
+        }
+
+        missingRenderer {
+            condition = ${node.context.inBackend && theme && feature}
+            renderer = afx`
+                <div style="border: 2px solid red; padding:10px; background: lightgrey;">
+                  The selected theme "{theme}" cannot render feature "{feature}"
+                </div>
+            `
+        }
+
+        missingTheme {
+            condition = ${node.context.inBackend && !theme}
+            renderer = afx`
+                <div style="border: 2px solid red; padding:10px; background: lightgrey;">
+                  No theme was selected
+                </div>
+            `
+        }
+    }
+}

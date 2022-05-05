@@ -1,0 +1,20 @@
+Sitegeist.Turncoat:Mixin.ThemeSelector:
+  abstract: true
+  ui:
+    inspector:
+      groups:
+        theme:
+          label: "Theme"
+          icon: swatchbook
+          tab: default
+  properties:
+    theme:
+      type: string
+      ui:
+        label: "Theme"
+        reloadPageIfChanged: true
+        inspector:
+          group: theme
+          editor: Neos.Neos/Inspector/Editors/SelectBoxEditor
+          editorOptions:
+            dataSourceIdentifier: sitegeist_turncoat_themes
