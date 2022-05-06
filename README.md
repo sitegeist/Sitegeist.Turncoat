@@ -59,11 +59,11 @@ prototype(Vendor.Site:Content.Example) < prototype(Neos.Neos:ContentComponent) {
 
 ### Implementing a Theme
 
-Theme packages provide the rendering for all supported features and use the package-type `neos-theme`.
+Theme packages provide the rendering for all supported features and use the package-type `neos-themes`.
 
 You can kickstart such a package with the command:
 ```
-./flow package:create --package-type neos-theme Vendor.Theme
+./flow package:create --package-type neos-themes Vendor.Theme
 ``` 
 
 In the theme-package you have to create a file Settings.yaml with the following content

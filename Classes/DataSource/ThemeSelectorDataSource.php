@@ -25,7 +25,7 @@ class ThemeSelectorDataSource extends AbstractDataSource
 
     public function getData(NodeInterface $node = null, array $arguments = []): array
     {
-        $packages = $this->packageManager->getFilteredPackages('available', 'neos-theme');
+        $packages = $this->packageManager->getFilteredPackages('available', 'neos-themes');
         return array_reduce(
             $packages,
             function (array $carry, PackageInterface $package) {
