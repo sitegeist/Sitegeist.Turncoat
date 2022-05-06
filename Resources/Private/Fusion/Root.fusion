@@ -37,3 +37,7 @@ prototype(Sitegeist.Turncoat:ThemeRenderer) < prototype(Neos.Fusion:Component) {
         }
     }
 }
+
+prototype(Neos.Fusion:GlobalCacheIdentifiers) {
+  theme = ${q(site).property('theme')}
+}
