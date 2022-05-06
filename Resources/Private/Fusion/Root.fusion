@@ -1,49 +1,37 @@
-prototype(Sitegeist.Turncoat:ThemeRenderer) < prototype(Neos.Fusion:Value) {
+prototype(Sitegeist.Turncoat:ThemeRenderer) < prototype(Neos.Fusion:Component) {
     theme = ${q(site).property('theme')}
+    fallback = null
     feature = null
     props = Neos.Fusion:DataStructure
 
-    @context {
-        theme = ${this.theme}
-        feature = ${this.feature}
-        props = ${this.props}
-    }
-
-    value = Neos.Fusion:Case {
+    renderer = Neos.Fusion:Case {
         canRenderWithTheme {
             condition = Neos.Fusion:CanRender {
-                type = ${theme + ':Feature.' + feature}
+                type = ${props.theme + ':Feature.' + props.feature}
             }
             renderer = Neos.Fusion:Renderer {
-                type = ${theme + ':Feature.' + feature}
-                element.@apply.props = ${props}
+                type = ${props.theme + ':Feature.' + props.feature}
+                element.@apply.props = ${props.props}
             }
         }
 
-        canRenderWithDefault {
+        canRenderWithFallpack {
             condition = Neos.Fusion:CanRender {
-                type = ${'Sitegeist.Turncoat:Feature.' + feature}
+                type = ${props.fallback + ':Feature.' + props.feature}
             }
             renderer = Neos.Fusion:Renderer {
-                type = ${'Sitegeist.Turncoat:Feature.' + feature}
-                element.@apply.props = ${props}
+                type = ${props.fallback + ':Feature.' + props.feature}
+                element.@apply.props = ${props.props}
             }
         }
 
-        missingRenderer {
-            condition = ${node.context.inBackend && theme && feature}
+        error {
+            condition = ${node.context.inBackend}
             renderer = afx`
-                <div style="border: 2px solid red; padding:10px; background: lightgrey;">
-                  The selected theme "{theme}" cannot render feature "{feature}"
-                </div>
-            `
-        }
-
-        missingTheme {
-            condition = ${node.context.inBackend && !theme}
-            renderer = afx`
-                <div style="border: 2px solid red; padding:10px; background: lightgrey;">
-                  No theme was selected
+                <div style="border: 2px dotted red; padding:10px; background: lightgrey; margin: 20px 0;">
+                    <Neos.Fusion:Fragment @if.has={props.theme && props.feature}>The selected theme "{props.theme}" cannot render feature "{props.feature}"</Neos.Fusion:Fragment>
+                    <Neos.Fusion:Fragment @if.noTheme={!props.theme}>No theme given</Neos.Fusion:Fragment>
+                    <Neos.Fusion:Fragment @if.noFeature={!props.feature}>No feature was defined</Neos.Fusion:Fragment>
                 </div>
             `
         }

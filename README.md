@@ -4,6 +4,10 @@ Theming for Neos CMS ... by separating the implementation of features from the r
 
 !!! This is an experimental approach to test the feasibility of the concept !!! 
 
+The main idea is separation of packages providing features (nodetypes and integration) with packages providing 
+themes (presentation) to render those features. A feature package can be whole site package with documents and 
+menus or small package providing just a single specific nodetype.
+
 ### Authors & Sponsors
 
 * Martin Ficzel - ficzel@sitegeist.de
@@ -97,13 +101,25 @@ prototype(Vendor.Theme:Feature.Example) < prototype(Neos.Fusion:Component) {
 }
 ```
 
-### Providing a default rendering
+### Providing a fallback rendering
 
 Features can provide a default rendering that can be overridden by themes
-to do so the `Sitegeist.Turncoat:Feature` namespace is used.
+to do so a fallback package can be defined that provides a rendering. It makes sense 
+that this fallback either is inside the package providing the feature or in 
+a package this depends on.
 
-```neosfusion
-prototype(Sitegeist.Turncoat:Feature.Example) < prototype(Neos.Fusion:Component) {
+```
+prototype(Vendor.Site:Content.Example) < prototype(Neos.Neos:ContentComponent) {
+    renderer = Sitegeist.Turncoat:ThemeRenderer {
+        feature = "Example"
+        fallback = "Vendor.Theme"
+        props {
+            ...
+        }   
+    }
+}
+
+prototype(Vendor.Theme:Feature.Example) < prototype(Neos.Fusion:Component) {
     title = null    
     renderer = afx`
         <h1 style="font-family:Times,serif; color:green;">
